@@ -11,7 +11,7 @@ This project provides an accessible login/signup form solution. It includes comp
 1. Clone the repository:
 
 ```
-git clone https://github.com/your-username/accessible-form.git
+git clone https://github.com/abdullahalam123/accessible-form.git
 ```
 
 2. Navigate to the project directory:
@@ -55,7 +55,11 @@ accessible-form/
 │   ├── constants/
 │   │   └── users/              # Mock users data for user validation
 │   │
+│   ├── context/
+│   │   └── auth-context/       # Mock authentication context
+│   │
 │   ├── types/
+│   │   ├── auth-context/       # Props interface for auth context
 │   │   ├── button/             # Props interface for button component
 │   │   ├── form-input/         # Props interface for form input component
 │   │   ├── link/               # Props interface for link component

@@ -1,13 +1,18 @@
 "use client";
 
 import { LoginForm } from "@/components";
+import { AuthContext } from "@/context/auth-context";
+import { useContext } from "react";
 
 /**
  * @description LoginPage component representing the login form.
  * @returns {JSX.Element} - The rendered login page.
  */
 const LoginPage = () => {
+  const { login } = useContext(AuthContext);
+
   const handleLogin = (email: string, password: string) => {
+    login(email, password);
     console.log("Logging in with:", email, password);
   };
 
