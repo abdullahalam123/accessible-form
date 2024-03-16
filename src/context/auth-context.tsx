@@ -1,8 +1,9 @@
 "use client";
 
-import React, { createContext, useEffect, useState } from "react";
-import { mockUsers } from "@/constants";
+import { STORED_USERS } from "@/constants";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { AuthContextType, User } from "@/types";
+import React, { createContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext<AuthContextType>({
   currentUser: null,
@@ -13,6 +14,7 @@ export const AuthContext = createContext<AuthContextType>({
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<User | null>();
+  const { users } = useLocalStorage(STORED_USERS);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("currentUser");
@@ -23,7 +25,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const login = (email: string, password: string) => {
-    const user = mockUsers.find(
+    const user = users.find(
       (user) => user.email === email && user.password === password
     );
     if (user) {

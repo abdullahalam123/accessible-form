@@ -1,5 +1,4 @@
 import { LoginFormData, LoginFormProps, loginSchema } from "@/types";
-import { handleLogin } from "@/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -7,6 +6,7 @@ import { useForm } from "react-hook-form";
 import Button from "../button/button";
 import { FormInput } from "../form-input";
 import { LinkText } from "../link/link";
+import { useLogin } from "@/hooks";
 
 /**
  * Login Form Component
@@ -25,6 +25,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
     resolver: zodResolver(loginSchema),
     mode: "onChange",
   });
+
+  const { handleLogin } = useLogin();
 
   const router = useRouter();
 

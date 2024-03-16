@@ -1,5 +1,4 @@
 import { SignupFormData, SignupFormProps, signupSchema } from "@/types";
-import { handleSignup } from "@/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -7,6 +6,7 @@ import { useForm } from "react-hook-form";
 import Button from "../button/button";
 import { FormInput } from "../form-input";
 import { LinkText } from "../link/link";
+import { useSignup } from "@/hooks";
 
 /**
  * Signup Form Component
@@ -24,7 +24,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ onSignup }) => {
   } = useForm<SignupFormData>({
     resolver: zodResolver(signupSchema),
   });
-
+  const { handleSignup } = useSignup();
   const router = useRouter();
 
   const onSubmit = (data: SignupFormData) => {

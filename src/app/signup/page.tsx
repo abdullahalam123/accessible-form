@@ -8,7 +8,7 @@ import { SignupForm } from "@/components";
  */
 const SignupPage = () => {
   const handleSignup = (email: string, password: string) => {
-    console.log("Signing up with:", email, password);
+    console.log("signing up with:", email, password);
   };
 
   return (
