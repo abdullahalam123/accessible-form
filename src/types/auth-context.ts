@@ -22,4 +22,6 @@ export interface AuthContextType {
   login: (email: string, password: string) => boolean;
   logout: () => void;
   isAuthenticated: () => boolean;
+  users: User[];
+  saveUsers: (users: User[]) => void;
 }

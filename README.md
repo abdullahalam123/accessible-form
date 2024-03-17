@@ -74,6 +74,8 @@ accessible-form/
 │   │   ├── login-schema.ts     # Zod schema for login
 │   │   └── signup-schema.ts    # Zod schema for signup
 │
+│   ├── utils/
+│   │   └── check-json.ts       # Checks if a string is a valid JSON
 │
 ├── .gitignore
 ├── package.json

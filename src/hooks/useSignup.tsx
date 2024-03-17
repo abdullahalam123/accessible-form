@@ -1,7 +1,8 @@
 "use client";
 
-import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { AuthContext } from "@/context/auth-context";
 import { SignupFormData } from "@/types";
+import { useContext } from "react";
 import { UseFormSetError } from "react-hook-form";
 
 /**
@@ -12,8 +13,7 @@ import { UseFormSetError } from "react-hook-form";
  * }}
  */
 export const useSignup = () => {
-  const STORED_USERS = "mockUsers";
-  const { users, saveUsers } = useLocalStorage(STORED_USERS);
+  const { saveUsers, users } = useContext(AuthContext);
 
   /**
    * Handle signup form submission

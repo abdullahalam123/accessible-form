@@ -1,8 +1,8 @@
 "use client";
 
-import { STORED_USERS } from "@/constants";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { STORED_USERS, mockUsers } from "@/constants";
 import { AuthContextType, User } from "@/types";
+import { isValidJSON } from "@/utils";
 import React, { createContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext<AuthContextType>({
@@ -10,20 +10,47 @@ export const AuthContext = createContext<AuthContextType>({
   login: () => false,
   logout: () => {},
   isAuthenticated: () => false,
+  users: [],
+  saveUsers: () => {},
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<User | null>();
-  const { users } = useLocalStorage(STORED_USERS);
+  const [users, setUsers] = useState<User[]>(mockUsers);
+
+  useEffect(() => {
+    const storedUsers = localStorage.getItem(STORED_USERS);
+    if (storedUsers && isValidJSON(storedUsers)) {
+      setUsers(JSON.parse(storedUsers));
+    }
+  }, []);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("currentUser");
-    if (storedUser) {
+    if (storedUser && isValidJSON(storedUser)) {
       const parsedUser = JSON.parse(storedUser) as User;
       setCurrentUser(parsedUser);
     }
   }, []);
 
+  /**
+   * @description Save users to local storage and update state.
+   *
+   * @param {User[]} newUsers - an array of users to save
+   * @return {void}
+   */
+  const saveUsers = (newUsers: User[]) => {
+    localStorage.setItem(STORED_USERS, JSON.stringify(newUsers));
+    setUsers(newUsers);
+  };
+
+  /**
+   * @description Logs in a user with the provided email and password.
+   *
+   * @param {string} email - the email of the user trying to log in
+   * @param {string} password - the password of the user trying to log in
+   * @return {boolean} true if login is successful, false otherwise
+   */
   const login = (email: string, password: string) => {
     const user = users.find(
       (user) => user.email === email && user.password === password
@@ -39,6 +66,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  /**
+   * @description Logs out the current user and removes it from local storage.
+   */
   const logout = () => {
     setCurrentUser(null);
     if (typeof window !== "undefined") {
@@ -52,9 +82,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const contextValue = {
     currentUser,
+    users,
     login,
     logout,
     isAuthenticated,
+    saveUsers,
   };
 
   return (

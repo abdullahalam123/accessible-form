@@ -1,7 +1,8 @@
 "use client";
 
-import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { AuthContext } from "@/context/auth-context";
 import { LoginFormData } from "@/types";
+import { useContext } from "react";
 import { UseFormSetError, UseFormSetFocus } from "react-hook-form";
 
 /**
@@ -11,8 +12,7 @@ import { UseFormSetError, UseFormSetFocus } from "react-hook-form";
  * }}
  */
 export const useLogin = () => {
-  const STORED_USERS = "mockUsers";
-  const { users } = useLocalStorage(STORED_USERS);
+  const { users } = useContext(AuthContext);
 
   /**
    * Handle login form submission
